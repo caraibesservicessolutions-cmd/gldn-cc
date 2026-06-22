@@ -1,0 +1,27 @@
+{
+  "name": "GOLDEN CIRCLE Caraïbes",
+  "short_name": "Golden Circle",
+  "description": "L'accès aux privilèges: events, avantages VIP et opportunités caribéennes.",
+  "start_url": "/fr",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#050505",
+  "theme_color": "#050505",
+  "categories": ["lifestyle", "business", "entertainment"],
+  "lang": "fr",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
