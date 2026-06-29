@@ -1,6 +1,7 @@
 import { Crown, Handshake, Sparkles, Tag, Users } from "lucide-react";
 import { DealCard } from "@/components/Cards";
 import { CTAButton } from "@/components/CTAButton";
+import { PillarGrid, PartnerProgramGrid } from "@/components/Platform";
 import { SectionHeader } from "@/components/SectionHeader";
 import { getDictionary, isLocale, links } from "@/lib/i18n";
 import { notFound } from "next/navigation";
@@ -33,8 +34,19 @@ export default async function DealsPage({
     <main className="section-shell py-14 md:py-20">
       <SectionHeader title={dictionary.deals.title} text={dictionary.deals.subtitle} />
 
+      <section className="mt-10">
+        <SectionHeader
+          eyebrow="Moteur de privileges"
+          title="Les offres sont des acces verifies."
+          text="Le SaaS distingue les categories, conditions, quotas, priorites VIP et confirmations partenaires avant publication."
+        />
+        <div className="mt-8">
+          <PillarGrid />
+        </div>
+      </section>
+
       {hasConfirmedDeals ? (
-        <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        <div className="mt-12 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {confirmedDeals.map((deal) => (
             <DealCard key={`${deal.title}-${deal.zone}`} {...deal} />
           ))}
@@ -119,6 +131,17 @@ export default async function DealsPage({
             {dictionary.cta.partner}
           </CTAButton>
         </article>
+      </section>
+
+      <section className="mt-12">
+        <SectionHeader
+          eyebrow="Golden Link"
+          title="Les niveaux partenaires alimentent les avantages."
+          text="Reference, Plus, Pro et Signature permettent de structurer la visibilite, les offres, les activations et le suivi commercial."
+        />
+        <div className="mt-8">
+          <PartnerProgramGrid />
+        </div>
       </section>
     </main>
   );

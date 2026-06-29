@@ -9,6 +9,7 @@ import {
   Handshake,
   Home,
   Instagram,
+  LayoutDashboard,
   Menu,
   ShieldCheck,
   Tag,
@@ -39,6 +40,7 @@ export function Header({ locale, dictionary }: HeaderProps) {
     { href: `/${locale}/events`, label: dictionary.nav.events, icon: CalendarDays },
     { href: `/${locale}/deals`, label: dictionary.nav.deals, icon: Tag },
     { href: `/${locale}/partners`, label: dictionary.nav.partners, icon: Handshake },
+    { href: `/${locale}/spaces`, label: dictionary.nav.spaces, icon: LayoutDashboard },
     { href: `/${locale}/account`, label: dictionary.nav.account, icon: ShieldCheck }
   ];
 

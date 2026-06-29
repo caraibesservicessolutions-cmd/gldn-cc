@@ -1,43 +1,17 @@
+import { CreditCard, Handshake, ShieldCheck, Users } from "lucide-react";
 import { notFound } from "next/navigation";
-import { Crown, Handshake, ShieldCheck, Users } from "lucide-react";
 import { CTAButton } from "@/components/CTAButton";
+import {
+  MembershipGrid,
+  ModuleGrid,
+  NotificationPanel,
+  PillarGrid,
+  PlatformStats,
+  RoadmapGrid
+} from "@/components/Platform";
 import { SectionHeader } from "@/components/SectionHeader";
-import { SocialProof } from "@/components/SocialProof";
 import { getDictionary, isLocale, links } from "@/lib/i18n";
-import { memberPageText } from "@/lib/members";
-
-const spaceCards = {
-  fr: [
-    ["GC List", "Accès membre, carte virtuelle et annonces confirmées."],
-    ["VIP", "Statut VIP, avantages prioritaires et invitations futures."],
-    ["Partenaires", "Espace futur pour offres, campagnes et conversions."],
-    ["Organisateurs", "Espace futur pour collaborations événementielles."]
-  ],
-  en: [
-    ["GC List", "Member access, virtual card and confirmed announcements."],
-    ["VIP", "VIP status, priority benefits and future invitations."],
-    ["Partners", "Future space for offers, campaigns and conversions."],
-    ["Organizers", "Future space for event collaborations."]
-  ],
-  es: [
-    ["GC List", "Acceso miembro, tarjeta virtual y anuncios confirmados."],
-    ["VIP", "Estatus VIP, ventajas prioritarias e invitaciones futuras."],
-    ["Partners", "Espacio futuro para ofertas, campañas y conversiones."],
-    ["Organizadores", "Espacio futuro para colaboraciones de eventos."]
-  ],
-  pt: [
-    ["GC List", "Acesso membro, cartão virtual e anúncios confirmados."],
-    ["VIP", "Status VIP, vantagens prioritárias e convites futuros."],
-    ["Parceiros", "Espaço futuro para ofertas, campanhas e conversões."],
-    ["Organizadores", "Espaço futuro para colaborações de eventos."]
-  ],
-  ht: [
-    ["GC List", "Aksè manm, kat vityèl ak anons konfime."],
-    ["VIP", "Estati VIP, avantaj priyoritè ak envitasyon pou pita."],
-    ["Patnè", "Espas pou òf, kanpay ak konvèsyon pou pita."],
-    ["Òganizatè", "Espas pou kolaborasyon event pou pita."]
-  ]
-};
+import { demoMembers } from "@/lib/members";
 
 export default async function SpacesPage({
   params
@@ -50,49 +24,99 @@ export default async function SpacesPage({
     notFound();
   }
 
-  const copy = memberPageText[resolvedParams.locale];
-  const dictionary = getDictionary(resolvedParams.locale);
+  const locale = resolvedParams.locale;
+  const dictionary = getDictionary(locale);
+  const demoSecretId = demoMembers[0].secretId;
 
   return (
-    <main className="section-shell py-14 md:py-20">
-      <SectionHeader title={copy.spacesTitle} text={copy.spacesText} />
-      <div className="mt-10 grid gap-4 md:grid-cols-2">
-        {spaceCards[resolvedParams.locale].map(([label, description], index) => {
-          const icons = [Users, Crown, Handshake, ShieldCheck];
-          const Icon = icons[index];
-          return (
-            <article
-              key={label}
-              className="rounded-lg border border-white/10 bg-coal/82 p-6 shadow-card"
+    <main>
+      <section className="border-b border-white/10 bg-black/24 py-14 md:py-20">
+        <div className="section-shell">
+          <SectionHeader
+            eyebrow="Golden Circle OS"
+            title="Console SaaS de l'ecosysteme."
+            text="Un espace de pilotage pour organiser l'acces membre, les privileges, experiences, opportunites, partenaires et notifications."
+          />
+          <div className="mt-10">
+            <PlatformStats />
+          </div>
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+            <CTAButton href={`/${locale}/account`} icon={Users}>
+              {dictionary.nav.account}
+            </CTAButton>
+            <CTAButton href={`/${locale}/card/${demoSecretId}`} icon={CreditCard}>
+              Carte demo
+            </CTAButton>
+            <CTAButton
+              href={links.collaboration}
+              external
+              variant="secondary"
+              icon={Handshake}
             >
-              <Icon className="h-8 w-8 text-gold" aria-hidden />
-              <h2 className="mt-5 font-display text-3xl font-bold text-white">
-                {label}
-              </h2>
-              <p className="mt-3 text-sm leading-7 text-mist">
-                {description}
-              </p>
-            </article>
-          );
-        })}
-      </div>
-      <SocialProof locale={resolvedParams.locale} className="mt-8" />
-      <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-        <CTAButton href={`/${resolvedParams.locale}/account`} icon={Users}>
-          {dictionary.nav.account}
-        </CTAButton>
-        <CTAButton href={`/${resolvedParams.locale}/card`} icon={ShieldCheck}>
-          Carte demo
-        </CTAButton>
-        <CTAButton
-          href={links.collaboration}
-          external
-          variant="secondary"
-          icon={Handshake}
-        >
-          Collab Event
-        </CTAButton>
-      </div>
+              Golden Link
+            </CTAButton>
+          </div>
+        </div>
+      </section>
+
+      <section className="section-shell py-14 md:py-20">
+        <SectionHeader
+          eyebrow="Modules"
+          title="Les briques operationnelles."
+          text="Chaque module correspond a une partie du business: acquisition, validation, distribution d'acces et suivi."
+        />
+        <div className="mt-10">
+          <ModuleGrid />
+        </div>
+      </section>
+
+      <section className="bg-gradient-to-b from-ink via-wine/30 to-ink py-14 md:py-20">
+        <div className="section-shell">
+          <SectionHeader
+            eyebrow="Offres & statuts"
+            title="Membres, VIP et ambassadrices."
+            text="Le SaaS distingue l'achat d'un droit d'acces, la priorite VIP et les statuts attribues par l'equipe."
+          />
+          <div className="mt-10">
+            <MembershipGrid />
+          </div>
+        </div>
+      </section>
+
+      <section className="section-shell py-14 md:py-20">
+        <SectionHeader
+          eyebrow="Distribution d'acces"
+          title="Privileges, experiences, opportunites."
+          text="Le coeur produit reste simple: distribuer le bon acces au bon segment, seulement quand l'operation est confirmee."
+        />
+        <div className="mt-10">
+          <PillarGrid />
+        </div>
+        <div className="mt-8">
+          <NotificationPanel />
+        </div>
+      </section>
+
+      <section className="border-t border-white/10 bg-black/24 py-14 md:py-20">
+        <div className="section-shell">
+          <SectionHeader
+            eyebrow="Execution"
+            title="Roadmap MVP 90 jours."
+            text="La plateforme est pensee pour demarrer leger, puis monter en puissance avec Supabase, le portail partenaire et les operations terrain."
+          />
+          <div className="mt-10">
+            <RoadmapGrid />
+          </div>
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+            <CTAButton href={`/${locale}/admin`} variant="secondary" icon={ShieldCheck}>
+              Admin
+            </CTAButton>
+            <CTAButton href={`/${locale}/partners`} variant="secondary" icon={Handshake}>
+              {dictionary.nav.partners}
+            </CTAButton>
+          </div>
+        </div>
+      </section>
     </main>
   );
 }

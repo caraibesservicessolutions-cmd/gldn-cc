@@ -1,6 +1,7 @@
 import { CreditCard, Instagram, ShieldCheck, Sparkles, Users } from "lucide-react";
 import { notFound } from "next/navigation";
 import { CTAButton } from "@/components/CTAButton";
+import { NotificationPanel, PlatformStats } from "@/components/Platform";
 import { SectionHeader } from "@/components/SectionHeader";
 import { getDictionary, isLocale, links, type Locale } from "@/lib/i18n";
 import { demoMembers } from "@/lib/members";
@@ -112,6 +113,10 @@ export default async function AccountPage({
         </div>
       </section>
 
+      <section className="mt-8">
+        <PlatformStats />
+      </section>
+
       <section className="mt-8 grid gap-4 md:grid-cols-2">
         <article className="rounded-lg border border-white/10 bg-coal/82 p-5">
           <p className="text-xs font-black uppercase tracking-[0.24em] text-gold">
@@ -135,6 +140,33 @@ export default async function AccountPage({
             /{locale}/card/{demoSecretId}
           </p>
         </article>
+      </section>
+
+      <section className="mt-8 grid gap-4 lg:grid-cols-[0.9fr_1.1fr]">
+        <article className="rounded-lg border border-gold/20 bg-black/25 p-6">
+          <p className="text-xs font-black uppercase tracking-[0.24em] text-gold">
+            Parcours membre
+          </p>
+          <h2 className="mt-3 font-display text-3xl font-bold text-white">
+            Acces controle, priorite claire.
+          </h2>
+          <div className="mt-6 grid gap-3">
+            {[
+              ["GC List", "Acces annuel aux privileges, experiences et opportunites."],
+              ["VIP", "Notifications prioritaires, quotas reserves et acces anticipes."],
+              ["Ambassadrice", "Statut attribue selon implication et contribution."]
+            ].map(([label, text]) => (
+              <div
+                key={label}
+                className="rounded-lg border border-white/10 bg-coal/82 p-4"
+              >
+                <p className="text-sm font-bold text-white">{label}</p>
+                <p className="mt-1 text-xs leading-5 text-mist">{text}</p>
+              </div>
+            ))}
+          </div>
+        </article>
+        <NotificationPanel />
       </section>
     </main>
   );

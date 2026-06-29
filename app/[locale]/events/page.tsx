@@ -2,6 +2,7 @@ import { CalendarCheck, Crown, Handshake, Megaphone, Users } from "lucide-react"
 import { EventCard } from "@/components/Cards";
 import { CTAButton } from "@/components/CTAButton";
 import { InstagramWidget } from "@/components/InstagramWidget";
+import { EventFormatGrid, RoadmapGrid } from "@/components/Platform";
 import { SectionHeader } from "@/components/SectionHeader";
 import { getDictionary, isLocale, links } from "@/lib/i18n";
 import { notFound } from "next/navigation";
@@ -35,8 +36,19 @@ export default async function EventsPage({
     <main className="section-shell py-14 md:py-20">
       <SectionHeader title={dictionary.events.title} text={dictionary.events.subtitle} />
 
+      <section className="mt-10">
+        <SectionHeader
+          eyebrow="Architecture evenementielle"
+          title="Des formats proprietaires, pas une billetterie."
+          text="Golden Circle structure les experiences autour d'activations partenaires, d'evenements immersifs et d'un temps fort annuel."
+        />
+        <div className="mt-8">
+          <EventFormatGrid />
+        </div>
+      </section>
+
       {hasConfirmedEvents ? (
-        <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        <div className="mt-12 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {confirmedEvents.map((event) => (
             <EventCard key={`${event.title}-${event.date}`} {...event} />
           ))}
@@ -103,6 +115,17 @@ export default async function EventsPage({
             </CTAButton>
           </div>
         </article>
+      </section>
+
+      <section className="mt-12">
+        <SectionHeader
+          eyebrow="Execution"
+          title="Du partenaire a la communaute."
+          text="Chaque experience suit un cycle simple: cadrage, confirmation, diffusion, priorite VIP et retour operationnel."
+        />
+        <div className="mt-8">
+          <RoadmapGrid />
+        </div>
       </section>
 
       <InstagramWidget locale={resolvedParams.locale} />

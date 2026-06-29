@@ -355,7 +355,7 @@ const baseDictionaries = {
     offers: {
       gcList: {
         title: "GC List",
-        price: "15 €",
+        price: "18 €",
         period: "360 jours",
         intro: "Un accès simple au cercle des bons plans et opportunités.",
         benefits: [
@@ -370,8 +370,8 @@ const baseDictionaries = {
       },
       vip: {
         title: "VIP GC List",
-        price: "4,99 €/mois",
-        period: "49,90 €/an",
+        price: "49,90 €",
+        period: "360 jours prioritaires",
         intro: "L'expérience prioritaire pour ne rien manquer.",
         benefits: [
           "notifications immédiates",
@@ -578,7 +578,7 @@ const baseDictionaries = {
     offers: {
       gcList: {
         title: "GC List",
-        price: "15 €",
+        price: "18 €",
         period: "360 days",
         intro: "Simple access to the circle of deals and opportunities.",
         benefits: [
@@ -593,8 +593,8 @@ const baseDictionaries = {
       },
       vip: {
         title: "VIP GC List",
-        price: "4.99 €/month",
-        period: "49.90 €/year",
+        price: "49.90 €",
+        period: "360 priority days",
         intro: "The priority experience so you miss nothing.",
         benefits: [
           "instant notifications",
@@ -801,7 +801,7 @@ const baseDictionaries = {
     offers: {
       gcList: {
         title: "GC List",
-        price: "15 €",
+        price: "18 €",
         period: "360 días",
         intro: "Un acceso simple al círculo de ofertas y oportunidades.",
         benefits: [
@@ -816,8 +816,8 @@ const baseDictionaries = {
       },
       vip: {
         title: "VIP GC List",
-        price: "4,99 €/mes",
-        period: "49,90 €/año",
+        price: "49,90 €",
+        period: "360 días prioritarios",
         intro: "La experiencia prioritaria para no perderte nada.",
         benefits: [
           "notificaciones inmediatas",
