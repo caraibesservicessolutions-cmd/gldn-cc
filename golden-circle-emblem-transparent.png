@@ -1,0 +1,27 @@
+{
+  "name": "GOLDEN CIRCLE Caraïbes",
+  "short_name": "Golden Circle",
+  "description": "Infrastructure privée d'accès aux privilèges, expériences et opportunités lifestyle en Caraïbe.",
+  "start_url": "/fr",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#12070D",
+  "theme_color": "#4A192E",
+  "categories": ["lifestyle", "business", "entertainment"],
+  "lang": "fr",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
