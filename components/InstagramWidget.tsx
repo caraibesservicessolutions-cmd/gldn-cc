@@ -42,7 +42,7 @@ export function InstagramWidget({ locale }: { locale: Locale }) {
           </span>
           <div>
             <p className="text-xs font-black uppercase tracking-[0.24em] text-gold">
-              @gldn.crcl
+              @gld.crcl
             </p>
             <h2 className="mt-2 font-display text-3xl font-bold text-white">
               {copy.title}

@@ -167,13 +167,13 @@ const baseDictionaries = {
     meta: {
       title: "GOLDEN CIRCLE Caraïbes",
       description:
-        "Le hub premium des bons plans, events, avantages VIP et opportunités caribéennes."
+        "Infrastructure privée d'accès aux privilèges, expériences et opportunités lifestyle en Caraïbe."
     },
     nav: {
       home: "Accueil",
       join: "Rejoindre",
       vip: "VIP",
-      events: "Events",
+      events: "Événements",
       deals: "Offres",
       partners: "Partenaires",
       spaces: "Espaces",
@@ -192,15 +192,15 @@ const baseDictionaries = {
     },
     home: {
       heroText:
-        "Rejoins le cercle des bons plans, events, avantages VIP et opportunités caribéennes.",
+        "Rejoins l'infrastructure privée d'accès aux privilèges, expériences et opportunités lifestyle en Caraïbe.",
       trustLine:
-        "Un hub premium pour locaux, touristes, expatriés, diaspora et partenaires.",
+        "Accès contrôlé pour membres, partenaires et expériences sélectionnées.",
       whyTitle: "Pourquoi rejoindre le Cercle ?",
       whyText:
         "Golden Circle rassemble les accès utiles, les expériences et les opportunités au même endroit.",
       features: [
         {
-          title: "Events & expériences",
+          title: "Événements & expériences",
           text: "Découvre les moments forts, soirées, brunchs et expériences locales."
         },
         {
@@ -228,7 +228,7 @@ const baseDictionaries = {
     join: {
       title: "Entre dans le Cercle.",
       subtitle:
-        "Bons plans, events, avantages VIP et opportunités caribéennes.",
+        "Privilèges, expériences et opportunités lifestyle en Caraïbe.",
       founderTitle: "Membres Fondateurs",
       founderText:
         "Les 88 premiers membres gardent leur accès GC List gratuit jusqu'au 31 décembre 2026.",
@@ -265,7 +265,7 @@ const baseDictionaries = {
         "Golden Circle Caraïbes peut vous accompagner pour promouvoir votre événement, toucher une audience locale et touristique, créer du contenu, générer des inscriptions et activer une campagne QR code terrain.",
       memberTitle: "Reste informé des prochains events",
       memberText:
-        "Rejoins la GC List pour recevoir les prochaines annonces, bons plans, accès partenaires et opportunités Golden Circle.",
+        "Rejoins la GC List pour recevoir les prochaines annonces, accès partenaires et opportunités Golden Circle.",
       confirmedNote:
         "Aucun événement n’est publié tant qu’il n’est pas confirmé."
     },
@@ -279,7 +279,7 @@ const baseDictionaries = {
       categoriesTitle: "Catégories de futurs avantages",
       categories: [
         "Restaurants & bars",
-        "Events & soirées",
+        "Événements & expériences",
         "Beauté & bien-être",
         "Activités touristiques",
         "Location & mobilité",
@@ -357,10 +357,10 @@ const baseDictionaries = {
         title: "GC List",
         price: "18 €",
         period: "360 jours",
-        intro: "Un accès simple au cercle des bons plans et opportunités.",
+        intro: "Un accès annuel à une sélection de privilèges et opportunités.",
         benefits: [
           "communauté",
-          "bons plans",
+          "accès partenaires",
           "events",
           "offres partenaires",
           "opportunités Golden Circle"
@@ -616,7 +616,7 @@ const baseDictionaries = {
     meta: {
       title: "GOLDEN CIRCLE Caraïbes",
       description:
-        "Un hub premium de ofertas, eventos, ventajas VIP y oportunidades caribeñas."
+        "Infraestructura privada de acceso a privilegios, experiencias y oportunidades lifestyle caribeñas."
     },
     nav: {
       home: "Inicio",
@@ -643,7 +643,7 @@ const baseDictionaries = {
       heroText:
         "Únete al círculo de ofertas, eventos, ventajas VIP y oportunidades caribeñas.",
       trustLine:
-        "Un hub premium para locales, viajeros, expatriados, diáspora y partners.",
+        "Acceso controlado para miembros, partners y experiencias seleccionadas.",
       whyTitle: "¿Por qué unirse al Círculo?",
       whyText:
         "Golden Circle reúne accesos útiles, experiencias y oportunidades en un solo lugar.",
@@ -867,7 +867,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       heroText:
         "Entre no círculo de bons planos, eventos, vantagens VIP e oportunidades caribenhas.",
       trustLine:
-        "Um hub premium para locais, viajantes, expatriados, diáspora e parceiros.",
+        "Acesso controlado para membros, parceiros e experiências selecionadas.",
       whyTitle: "Por que entrar no Círculo?",
       whyText:
         "Golden Circle reúne acessos úteis, experiências e oportunidades em um só lugar.",
@@ -1002,7 +1002,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       heroText:
         "Antre nan sèk bon plan, events, avantaj VIP ak opòtinite Karayib.",
       trustLine:
-        "Yon hub premium pou moun lokal, vizitè, ekspatriye, dyaspora ak patnè.",
+        "Aksè kontwole pou manm, patnè ak eksperyans yo chwazi.",
       whyTitle: "Poukisa antre nan Circle la?",
       whyText:
         "Golden Circle mete aksè itil, eksperyans ak opòtinite nan menm kote.",

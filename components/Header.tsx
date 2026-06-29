@@ -5,14 +5,13 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   CalendarDays,
-  Crown,
   Handshake,
   Home,
   Instagram,
-  LayoutDashboard,
+  LogIn,
+  Map,
   Menu,
   ShieldCheck,
-  Tag,
   Users,
   X
 } from "lucide-react";
@@ -35,13 +34,11 @@ export function Header({ locale, dictionary }: HeaderProps) {
   };
   const nav = [
     { href: `/${locale}`, label: dictionary.nav.home, icon: Home },
-    { href: `/${locale}/join`, label: dictionary.nav.join, icon: Users },
-    { href: `/${locale}/vip`, label: dictionary.nav.vip, icon: Crown },
+    { href: `/${locale}/gc-list`, label: "GC List", icon: Users },
+    { href: `/${locale}/partenaires`, label: dictionary.nav.partners, icon: Handshake },
     { href: `/${locale}/events`, label: dictionary.nav.events, icon: CalendarDays },
-    { href: `/${locale}/deals`, label: dictionary.nav.deals, icon: Tag },
-    { href: `/${locale}/partners`, label: dictionary.nav.partners, icon: Handshake },
-    { href: `/${locale}/spaces`, label: dictionary.nav.spaces, icon: LayoutDashboard },
-    { href: `/${locale}/account`, label: dictionary.nav.account, icon: ShieldCheck }
+    { href: `/${locale}/mini-map`, label: "Mini Map", icon: Map },
+    { href: `/${locale}/connexion`, label: "Connexion", icon: LogIn }
   ];
 
   return (
@@ -137,7 +134,7 @@ export function Header({ locale, dictionary }: HeaderProps) {
               className="flex min-h-12 items-center gap-3 rounded-lg border border-white/10 bg-coal px-4 py-3 text-sm font-semibold text-white transition hover:border-gold/40 hover:bg-ruby/30"
             >
               <Handshake className="h-4 w-4 text-gold" aria-hidden />
-              Collab Event
+              Devenir partenaire
             </a>
             <Link
               href={`/${locale}/legal`}

@@ -13,16 +13,16 @@ export const metadata: Metadata = {
     template: "%s | GOLDEN CIRCLE Caraïbes"
   },
   description:
-    "Golden Circle Caraïbes connecte events, bons plans, avantages VIP, partenaires et diaspora caribéenne.",
+    "Golden Circle Caraïbes est une infrastructure privée d'accès aux privilèges, expériences et opportunités lifestyle en Caraïbe.",
   keywords: [
     "Golden Circle Caraïbes",
     "Golden Circle Guadeloupe",
     "Événements Guadeloupe",
-    "Bons plans Guadeloupe",
-    "Events Saint-Martin",
-    "Caribbean VIP community",
-    "Caribbean events",
-    "Bons plans Caraïbes",
+    "Privilèges Caraïbes",
+    "Événements Saint-Martin",
+    "Caribbean private access",
+    "Caribbean lifestyle experiences",
+    "Mini Map Golden Circle",
     "Diaspora caribéenne",
     "Avantages partenaires Caraïbes"
   ],
@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     siteName: "GOLDEN CIRCLE Caraïbes",
     title: "GOLDEN CIRCLE Caraïbes - L'accès aux privilèges",
     description:
-      "Events, bons plans, avantages VIP et opportunités pour les Caraïbes et la diaspora.",
+      "Infrastructure privée d'accès aux privilèges, expériences et opportunités lifestyle en Caraïbe.",
     images: [
       {
         url: "/og-golden-circle.png",
@@ -65,7 +65,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "GOLDEN CIRCLE Caraïbes",
     description:
-      "Le hub premium des events, bons plans, avantages VIP et opportunités caribéennes.",
+      "L'accès privé aux privilèges, expériences et opportunités lifestyle en Caraïbe.",
     images: ["/og-golden-circle.png"]
   },
   alternates: {
@@ -80,8 +80,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#050505" },
-    { media: "(prefers-color-scheme: light)", color: "#050505" }
+    { media: "(prefers-color-scheme: dark)", color: "#4A192E" },
+    { media: "(prefers-color-scheme: light)", color: "#4A192E" }
   ],
   colorScheme: "dark",
   width: "device-width",

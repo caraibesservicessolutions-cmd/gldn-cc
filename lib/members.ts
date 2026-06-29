@@ -40,7 +40,7 @@ export type MemberInput = Omit<
   "id" | "secretId" | "createdAt" | "updatedAt"
 >;
 
-export const memberStorageKey = "golden-circle-demo-members";
+export const memberStorageKey = "golden-circle-local-members";
 
 export const memberTypes: MemberType[] = [
   "founder",
@@ -152,27 +152,27 @@ export const memberStatusLabels: Record<Locale, Record<MemberStatus, string>> = 
 
 const now = "2026-06-21T00:00:00.000Z";
 
-export const demoMembers: Member[] = [
+export const seedMembers: Member[] = [
   {
-    id: "demo-founder",
+    id: "seed-founder",
     secretId: "GC-2026-F001",
-    fullName: "Membre Fondateur Demo",
-    instagram: "@gldn.crcl",
+    fullName: "Membre Fondateur",
+    instagram: "@gld.crcl",
     type: "founder",
     status: "active",
     language: "fr",
     location: "Caraïbes",
     startDate: "2026-06-21",
     endDate: "2026-12-31",
-    notes: "Carte de démonstration V2.",
+    notes: "Carte locale de validation.",
     createdAt: now,
     updatedAt: now
   },
   {
-    id: "demo-vip",
+    id: "seed-vip",
     secretId: "GC-2026-V001",
-    fullName: "Membre VIP Demo",
-    instagram: "@gldn.crcl",
+    fullName: "Membre VIP",
+    instagram: "@gld.crcl",
     type: "vip",
     status: "active",
     language: "fr",
@@ -269,19 +269,19 @@ export function getMemberBySecretId(secretId: string, members: Member[]) {
 }
 
 export function findMemberBySecretId(secretId: string) {
-  return getMemberBySecretId(secretId, demoMembers);
+  return getMemberBySecretId(secretId, seedMembers);
 }
 
 export function getStoredMembers() {
-  if (typeof window === "undefined") return demoMembers;
+  if (typeof window === "undefined") return seedMembers;
 
   const saved = window.localStorage.getItem(memberStorageKey);
-  if (!saved) return demoMembers;
+  if (!saved) return seedMembers;
 
   try {
     return (JSON.parse(saved) as Partial<Member>[]).map(normalizeMember);
   } catch {
-    return demoMembers;
+    return seedMembers;
   }
 }
 
@@ -362,7 +362,7 @@ export const memberPageText: Record<
       "Member, VIP, partner and organizer spaces prepare the future connected management system.",
     adminTitle: "Golden Circle account admin",
     adminText:
-      "Local demo management prepared for Supabase. Data created here stays in this browser."
+      "Local management prepared for Supabase. Data created here stays in this browser."
   },
   es: {
     cardTitle: "Tarjeta virtual miembro",
@@ -386,7 +386,7 @@ export const memberPageText: Record<
       "Los espacios miembros, VIP, partners y organizadores preparan la futura gestión conectada.",
     adminTitle: "Admin cuentas Golden Circle",
     adminText:
-      "Gestión local de demostración preparada para Supabase. Los datos creados aquí permanecen en este navegador."
+      "Gestión local preparada para Supabase. Los datos creados aquí permanecen en este navegador."
   },
   pt: {
     cardTitle: "Cartão virtual de membro",
@@ -410,7 +410,7 @@ export const memberPageText: Record<
       "Os espaços de membros, VIP, parceiros e organizadores preparam a futura gestão conectada.",
     adminTitle: "Admin de contas Golden Circle",
     adminText:
-      "Gestão local de demonstração preparada para Supabase. Os dados criados aqui ficam neste navegador."
+      "Gestão local preparada para Supabase. Os dados criados aqui ficam neste navegador."
   },
   ht: {
     cardTitle: "Kat vityèl manm",
@@ -434,6 +434,6 @@ export const memberPageText: Record<
       "Espas manm, VIP, patnè ak òganizatè yo prepare jesyon konekte pou pita.",
     adminTitle: "Admin kont Golden Circle",
     adminText:
-      "Jesyon demo lokal ki prepare pou Supabase. Done ki kreye isit la rete nan navigatè sa a."
+      "Jesyon lokal ki prepare pou Supabase. Done ki kreye isit la rete nan navigatè sa a."
   }
 };

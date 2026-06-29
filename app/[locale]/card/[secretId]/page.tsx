@@ -1,11 +1,11 @@
 import { notFound } from "next/navigation";
 import { MemberCardResolver } from "@/components/MemberCardResolver";
 import { SectionHeader } from "@/components/SectionHeader";
-import { demoMembers, memberPageText } from "@/lib/members";
+import { seedMembers, memberPageText } from "@/lib/members";
 import { isLocale, locales } from "@/lib/i18n";
 
 export function generateStaticParams() {
-  return demoMembers.flatMap((member) =>
+  return seedMembers.flatMap((member) =>
     locales.map((locale) => ({
       locale,
       secretId: member.secretId

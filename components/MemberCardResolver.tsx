@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { MemberCard } from "@/components/MemberCard";
 import type { Locale } from "@/lib/i18n";
 import {
-  demoMembers,
+  seedMembers,
   getMemberBySecretId,
   memberPageText,
   type Member
@@ -19,7 +19,7 @@ export function MemberCardResolver({
   secretId: string;
 }) {
   const [member, setMember] = useState<Member | null>(() =>
-    getMemberBySecretId(secretId, demoMembers) ?? null
+    getMemberBySecretId(secretId, seedMembers) ?? null
   );
 
   useEffect(() => {

@@ -1,7 +1,7 @@
 export const links = {
   gcList: "https://forms.gle/omemdzTmxy26qfyeA",
   vipList: "https://forms.gle/Mcsz2ZJ8iytNGcCX7",
-  instagram: "https://www.instagram.com/gldn.crcl/",
+  instagram: "https://www.instagram.com/gld.crcl/",
   collaboration: "https://forms.gle/kZrz5SWyJyxh8Zey8"
 } as const;
 

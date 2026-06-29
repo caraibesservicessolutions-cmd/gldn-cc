@@ -15,24 +15,15 @@ type FooterProps = {
   dictionary: Dictionary;
 };
 
-const footerCopy = {
-  fr: { card: "Carte virtuelle" },
-  en: { card: "Virtual card" },
-  es: { card: "Tarjeta virtual" },
-  pt: { card: "Cartão virtual" },
-  ht: { card: "Kat vityèl" }
-} satisfies Record<Locale, { card: string }>;
-
 export function Footer({ locale, dictionary }: FooterProps) {
-  const copy = footerCopy[locale];
   const footerLinks = [
-    { label: dictionary.offers.gcList.title, href: links.gcList, external: true },
-    { label: dictionary.offers.vip.title, href: links.vipList, external: true },
-    { label: dictionary.nav.account, href: `/${locale}/account` },
-    { label: dictionary.nav.spaces, href: `/${locale}/spaces` },
-    { label: copy.card, href: `/${locale}/card` },
+    { label: "GC List", href: `/${locale}/gc-list` },
+    { label: dictionary.nav.partners, href: `/${locale}/partenaires` },
+    { label: dictionary.nav.events, href: `/${locale}/events` },
+    { label: "Mini Map", href: `/${locale}/mini-map` },
+    { label: "Connexion", href: `/${locale}/connexion` },
     { label: dictionary.nav.instagram, href: links.instagram, external: true },
-    { label: "Collab Event", href: links.collaboration, external: true },
+    { label: "Devenir partenaire", href: links.collaboration, external: true },
     { label: dictionary.nav.legal, href: `/${locale}/legal` },
     { label: dictionary.nav.language, href: `/${locale}/language` }
   ];
@@ -43,7 +34,8 @@ export function Footer({ locale, dictionary }: FooterProps) {
         <div>
           <Logo locale={locale} />
           <p className="mt-5 max-w-xl text-sm leading-7 text-mist">
-            {dictionary.footer.line}
+            Golden Circle controle, valide et distribue l'acces aux privileges,
+            experiences et opportunites lifestyle en Caraibe.
           </p>
           <p className="mt-3 text-sm text-mist">
             {legal.commercialNotice}
@@ -80,7 +72,7 @@ export function Footer({ locale, dictionary }: FooterProps) {
             className="inline-flex items-center gap-2 rounded-lg border border-white/10 px-4 py-3 text-sm font-semibold text-gold transition hover:border-gold hover:bg-gold hover:text-ink"
           >
             <Instagram className="h-4 w-4" aria-hidden />
-            @gldn.crcl
+            @gld.crcl
           </a>
           <div className="sm:col-span-2 grid gap-2 rounded-lg border border-white/10 p-3 sm:grid-cols-5">
             {locales.map((item) => (

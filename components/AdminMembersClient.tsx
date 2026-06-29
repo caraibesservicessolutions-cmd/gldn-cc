@@ -19,7 +19,7 @@ import {
 import { SocialProof } from "@/components/SocialProof";
 import type { Locale } from "@/lib/i18n";
 import {
-  demoMembers,
+  seedMembers,
   memberPageText,
   memberStatuses,
   memberStatusLabels,
@@ -33,8 +33,8 @@ import {
 } from "@/lib/members";
 import { memberService } from "@/src/lib/members/member.service";
 
-const adminAccessStorageKey = "golden-circle-demo-admin-access";
-const fallbackAdminCode = "GC-DEMO-2026";
+const adminAccessStorageKey = "golden-circle-local-admin-access";
+const fallbackAdminCode = "GC-LOCAL-2026";
 
 const copy = {
   fr: {
@@ -66,7 +66,7 @@ const copy = {
     delete: "Supprimer",
     copySecret: "Copier Secret ID",
     viewCard: "Voir carte",
-    resetDemo: "Réinitialiser demo",
+    resetSeed: "Réinitialiser les données locales",
     search: "Rechercher nom, email, téléphone ou Secret ID",
     filterAll: "Tous statuts",
     typeAll: "Tous types",
@@ -114,7 +114,7 @@ const copy = {
     delete: "Delete",
     copySecret: "Copy Secret ID",
     viewCard: "View card",
-    resetDemo: "Reset demo",
+    resetSeed: "Reset local data",
     search: "Search name, email, phone or Secret ID",
     filterAll: "All statuses",
     typeAll: "All types",
@@ -122,7 +122,7 @@ const copy = {
     successUpdate: "Account updated.",
     loading: "Loading accounts...",
     accessTitle: "Admin access",
-    accessText: "Enter the demo admin code to open local management.",
+    accessText: "Enter the admin access code to open local management.",
     accessButton: "Open admin",
     accessError: "Incorrect code.",
     tempSecurity:
@@ -161,7 +161,7 @@ const copy = {
     delete: "Eliminar",
     copySecret: "Copiar Secret ID",
     viewCard: "Ver tarjeta",
-    resetDemo: "Reiniciar demo",
+    resetSeed: "Reiniciar datos locales",
     search: "Buscar nombre, email, teléfono o Secret ID",
     filterAll: "Todos estados",
     typeAll: "Todos tipos",
@@ -169,7 +169,7 @@ const copy = {
     successUpdate: "Cuenta actualizada.",
     loading: "Cargando cuentas...",
     accessTitle: "Acceso admin",
-    accessText: "Introduce el código admin demo para abrir la gestión local.",
+    accessText: "Introduce el código admin para abrir la gestión local.",
     accessButton: "Abrir admin",
     accessError: "Código incorrecto.",
     tempSecurity:
@@ -208,7 +208,7 @@ const copy = {
     delete: "Excluir",
     copySecret: "Copiar Secret ID",
     viewCard: "Ver cartão",
-    resetDemo: "Reiniciar demo",
+    resetSeed: "Reiniciar datos locales",
     search: "Buscar nome, email, telefone ou Secret ID",
     filterAll: "Todos status",
     typeAll: "Todos tipos",
@@ -216,7 +216,7 @@ const copy = {
     successUpdate: "Conta atualizada.",
     loading: "Carregando contas...",
     accessTitle: "Acesso admin",
-    accessText: "Digite o código admin demo para abrir a gestão local.",
+    accessText: "Digite o código admin para abrir a gestão local.",
     accessButton: "Abrir admin",
     accessError: "Código incorreto.",
     tempSecurity:
@@ -255,7 +255,7 @@ const copy = {
     delete: "Efase",
     copySecret: "Kopye Secret ID",
     viewCard: "Gade kat",
-    resetDemo: "Rekòmanse demo",
+    resetSeed: "Rekòmanse done lokal yo",
     search: "Chèche non, email, telefòn oswa Secret ID",
     filterAll: "Tout estati",
     typeAll: "Tout kalite",
@@ -263,7 +263,7 @@ const copy = {
     successUpdate: "Kont mete ajou.",
     loading: "Chajman kont yo...",
     accessTitle: "Aksè admin",
-    accessText: "Antre kòd admin demo a pou louvri jesyon lokal la.",
+    accessText: "Antre kòd admin nan pou louvri jesyon lokal la.",
     accessButton: "Louvri admin",
     accessError: "Kòd pa bon.",
     tempSecurity:
@@ -306,7 +306,7 @@ export function AdminMembersClient({ locale }: { locale: Locale }) {
   });
   const [accessCode, setAccessCode] = useState("");
   const [accessError, setAccessError] = useState(false);
-  const [members, setMembers] = useState<Member[]>(demoMembers);
+  const [members, setMembers] = useState<Member[]>(seedMembers);
   const [form, setForm] = useState<MemberInput>({
     ...emptyForm,
     language: locale
@@ -433,9 +433,9 @@ export function AdminMembersClient({ locale }: { locale: Locale }) {
     await navigator.clipboard.writeText(value);
   }
 
-  function resetDemo() {
-    window.localStorage.setItem("golden-circle-demo-members", JSON.stringify(demoMembers));
-    setMembers(demoMembers);
+  function resetSeed() {
+    window.localStorage.setItem("golden-circle-local-members", JSON.stringify(seedMembers));
+    setMembers(seedMembers);
     setMessage("");
     setLastCreated(null);
     cancelEdit();
@@ -492,7 +492,7 @@ export function AdminMembersClient({ locale }: { locale: Locale }) {
               if (event.key === "Enter") unlockAdmin();
             }}
             className="min-h-12 rounded-lg border border-white/10 bg-black/30 px-4 text-white outline-none focus:border-gold"
-            placeholder="GC-DEMO-2026"
+            placeholder="GC-LOCAL-2026"
             type="password"
           />
           <button
@@ -615,11 +615,11 @@ export function AdminMembersClient({ locale }: { locale: Locale }) {
           <h2 className="font-display text-3xl font-bold text-white">{t.list}</h2>
           <button
             type="button"
-            onClick={resetDemo}
+            onClick={resetSeed}
             className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-gold/30 px-3 py-2 text-xs font-bold uppercase text-champagne"
           >
             <RotateCcw className="h-3.5 w-3.5" />
-            {t.resetDemo}
+            {t.resetSeed}
           </button>
         </div>
         <div className="mt-5 grid gap-3 lg:grid-cols-[1fr_180px_180px]">
