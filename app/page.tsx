@@ -100,6 +100,8 @@ export default function HomePage() {
   const [selected,setSelected] = useState(events[0]);
   const [reserved,setReserved] = useState(false);
   const [confirmed,setConfirmed] = useState(false);
+  const [adminMembers,setAdminMembers] = useState<any[]>([]);
+  const [adminMembersBusy,setAdminMembersBusy] = useState(false);
 
   async function hydrateUser(userId:string,userEmail?:string|null){
     const { data, error } = await supabase
@@ -160,6 +162,24 @@ export default function HomePage() {
     setAuthBusy(false);
   }
 
+  async function loadAdminMembers(){
+    setAdminMembersBusy(true);
+    const {data,error}=await supabase.from("profiles")
+      .select("id,first_name,last_name,phone,city,territory,membership_tier,membership_status,account_status,profile_completed_at,created_at")
+      .eq("role","member")
+      .order("created_at",{ascending:false});
+    if(!error) setAdminMembers(data || []);
+    setAdminMembersBusy(false);
+  }
+
+  async function decideMember(id:string,decision:"approved"|"rejected"|"suspended",tier:"gc"|"gc_vip"|"gc_ambassador"="gc"){
+    const update:any={membership_status:decision,updated_at:new Date().toISOString()};
+    if(decision==="approved") update.membership_tier=tier;
+    const {error}=await supabase.from("profiles").update(update).eq("id",id);
+    if(error){ setAuthError(error.message); return; }
+    await loadAdminMembers();
+  }
+
   async function completeExistingProfile(){
     if(!currentUserId) return;
     if(!firstName.trim() || !lastName.trim() || !phone.trim() || !city.trim() || !territory.trim()){
@@ -192,6 +212,10 @@ export default function HomePage() {
     setProfileCompleted(true);
     setAuthBusy(false);
   }
+
+  useEffect(()=>{
+    if(logged && role==="admin" && screen==="adminMembers") loadAdminMembers();
+  },[logged,role,screen]);
 
   async function logout(){
     await supabase.auth.signOut();
