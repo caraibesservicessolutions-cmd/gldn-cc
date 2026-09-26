@@ -273,6 +273,20 @@ export default function HomePage() {
                     ? "Votre accès membre est temporairement suspendu."
                     : "Votre compte n’est pas actuellement autorisé à accéder à l’espace membre."}
           </p>
+          {!profileCompleted ? <div style={{display:"grid",gap:8,marginTop:14}}>
+            <input value={firstName} onChange={e=>setFirstName(e.target.value)} placeholder="Prénom *" style={{padding:"12px",borderRadius:10,border:"1px solid rgba(255,255,255,.13)",background:"#111012",color:PEARL}}/>
+            <input value={lastName} onChange={e=>setLastName(e.target.value)} placeholder="Nom *" style={{padding:"12px",borderRadius:10,border:"1px solid rgba(255,255,255,.13)",background:"#111012",color:PEARL}}/>
+            <input value={phone} onChange={e=>setPhone(e.target.value)} placeholder="Téléphone *" style={{padding:"12px",borderRadius:10,border:"1px solid rgba(255,255,255,.13)",background:"#111012",color:PEARL}}/>
+            <input value={city} onChange={e=>setCity(e.target.value)} placeholder="Ville / Commune *" style={{padding:"12px",borderRadius:10,border:"1px solid rgba(255,255,255,.13)",background:"#111012",color:PEARL}}/>
+            <input value={territory} onChange={e=>setTerritory(e.target.value)} placeholder="Territoire *" style={{padding:"12px",borderRadius:10,border:"1px solid rgba(255,255,255,.13)",background:"#111012",color:PEARL}}/>
+            <input value={instagram} onChange={e=>setInstagram(e.target.value)} placeholder="Instagram (facultatif)" style={{padding:"12px",borderRadius:10,border:"1px solid rgba(255,255,255,.13)",background:"#111012",color:PEARL}}/>
+            <label style={{fontSize:9,color:"#d4ccd0"}}><input type="checkbox" checked={confirm18} onChange={e=>setConfirm18(e.target.checked)}/> Je confirme avoir 18 ans ou plus. *</label>
+            <label style={{fontSize:9,color:"#d4ccd0"}}><input type="checkbox" checked={confirmAccuracy} onChange={e=>setConfirmAccuracy(e.target.checked)}/> Je confirme l’exactitude des informations. *</label>
+            <label style={{fontSize:9,color:"#d4ccd0"}}><input type="checkbox" checked={acceptRules} onChange={e=>setAcceptRules(e.target.checked)}/> J’accepte les règles / la charte GC List. *</label>
+            <label style={{fontSize:9,color:"#d4ccd0"}}><input type="checkbox" checked={acceptPrivacy} onChange={e=>setAcceptPrivacy(e.target.checked)}/> J’accepte la politique de confidentialité. *</label>
+            {authError ? <p style={{fontSize:9,color:"#e78686",margin:0}}>{authError}</p> : null}
+            <GoldButton disabled={authBusy} onClick={completeExistingProfile}>{authBusy?"ENREGISTREMENT…":"SOUMETTRE MON PROFIL"}</GoldButton>
+          </div> : null}
           <button onClick={logout} style={{marginTop:18,width:"100%",border:0,background:"transparent",color:"#e06161"}}>Se déconnecter</button>
         </div>
       </div>
