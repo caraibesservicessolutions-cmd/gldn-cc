@@ -210,6 +210,31 @@ export default function HomePage() {
     </div>
   </Shell>;
 
+  if(role==="member" && (!profileCompleted || membershipStatus!=="approved" || accountStatus!=="active")){
+    return <Shell>
+      <div style={{minHeight:"100vh",padding:"34px 20px",display:"flex",alignItems:"center"}}>
+        <div style={{width:"100%",border:`1px solid ${BORDER}`,borderRadius:22,padding:20,background:"rgba(10,7,8,.92)"}}>
+          <p style={{margin:0,fontSize:10,color:GOLD,letterSpacing:1.6}}>GC LIST</p>
+          <h1 style={{margin:"8px 0 8px",fontSize:24,fontWeight:500}}>
+            {!profileCompleted ? "Profil à compléter" : membershipStatus==="pending" ? "Demande en cours de validation" : membershipStatus==="rejected" ? "Demande non validée" : membershipStatus==="suspended" ? "Accès suspendu" : "Accès indisponible"}
+          </h1>
+          <p style={{fontSize:11,lineHeight:1.7,color:MUTED}}>
+            {!profileCompleted
+              ? "Votre compte existe, mais votre profil Golden Circle est incomplet."
+              : membershipStatus==="pending"
+                ? "Votre profil a bien été reçu. L’accès aux privilèges sera activé uniquement après validation par Golden Circle."
+                : membershipStatus==="rejected"
+                  ? "Votre demande n’est pas active."
+                  : membershipStatus==="suspended"
+                    ? "Votre accès membre est temporairement suspendu."
+                    : "Votre compte n’est pas actuellement autorisé à accéder à l’espace membre."}
+          </p>
+          <button onClick={logout} style={{marginTop:18,width:"100%",border:0,background:"transparent",color:"#e06161"}}>Se déconnecter</button>
+        </div>
+      </div>
+    </Shell>;
+  }
+
   if(role==="member"){
     if(screen==="home") return <Shell>
       <div style={{paddingBottom:88}}>
