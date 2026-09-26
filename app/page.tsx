@@ -80,6 +80,17 @@ export default function HomePage() {
   const [authBusy,setAuthBusy] = useState(false);
   const [authError,setAuthError] = useState("");
   const [authInfo,setAuthInfo] = useState("");
+  const [signupOpen,setSignupOpen] = useState(false);
+  const [firstName,setFirstName] = useState("");
+  const [lastName,setLastName] = useState("");
+  const [phone,setPhone] = useState("");
+  const [city,setCity] = useState("");
+  const [territory,setTerritory] = useState("");
+  const [instagram,setInstagram] = useState("");
+  const [confirm18,setConfirm18] = useState(false);
+  const [confirmAccuracy,setConfirmAccuracy] = useState(false);
+  const [acceptRules,setAcceptRules] = useState(false);
+  const [acceptPrivacy,setAcceptPrivacy] = useState(false);
   const [membershipTier,setMembershipTier] = useState<"gc"|"gc_vip"|"gc_ambassador"|null>("gc");
   const [membershipStatus,setMembershipStatus] = useState<"pending"|"approved"|"rejected"|"suspended"|null>(null);
   const [accountStatus,setAccountStatus] = useState("active");
