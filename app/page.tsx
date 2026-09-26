@@ -409,7 +409,30 @@ export default function HomePage() {
 
   const adminTitle = screen==="adminMembers"?"Membres":screen==="adminPartners"?"Partenaires":screen==="adminAnnouncements"?"Annonces":screen==="adminReservations"?"Réservations":"Paramètres";
   return <Shell><div><TopBar title={adminTitle} back onBack={()=>setScreen("adminHome")}/><div style={{padding:14}}>
-    {screen==="adminSettings" ? ["Gestion des rôles","Niveaux membres","Catégories partenaires","Modèles d’annonces","Notifications","Sécurité","Journal d’activité"].map(x=><div key={x} style={{padding:"14px 0",borderBottom:"1px solid rgba(255,255,255,.08)",display:"flex",justifyContent:"space-between"}}><span>{x}</span><ChevronRight size={15} color={MUTED}/></div>)
-    : [1,2,3,4,5].map(i=><div key={i} style={{padding:"13px 0",borderBottom:"1px solid rgba(255,255,255,.08)",display:"flex",alignItems:"center",gap:10}}><div style={{width:36,height:36,borderRadius:10,background:"#241016",display:"grid",placeItems:"center",color:GOLD}}>{i}</div><div style={{flex:1}}><b style={{fontSize:12}}>{adminTitle} — élément {i}</b><p style={{margin:"3px 0",fontSize:9,color:MUTED}}>Donnée de démonstration</p></div><ChevronRight size={15}/></div>)}
+    {screen==="adminMembers" ? <div>
+      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12}}>
+        <p style={{margin:0,fontSize:10,color:MUTED}}>Validation manuelle des adhésions</p>
+        <button onClick={loadAdminMembers} style={{border:0,background:"transparent",color:GOLD,fontSize:9}}>Actualiser</button>
+      </div>
+      {adminMembersBusy ? <p style={{fontSize:10,color:MUTED}}>Chargement…</p> : null}
+      {adminMembers.length===0 && !adminMembersBusy ? <p style={{fontSize:10,color:MUTED}}>Aucune demande membre.</p> : null}
+      {adminMembers.map((m:any)=><div key={m.id} style={{padding:"13px 0",borderBottom:"1px solid rgba(255,255,255,.08)"}}>
+        <div style={{display:"flex",alignItems:"center",gap:10}}>
+          <div style={{width:36,height:36,borderRadius:"50%",border:`1px solid ${BORDER}`,display:"grid",placeItems:"center",color:GOLD}}>GC</div>
+          <div style={{flex:1}}>
+            <b style={{fontSize:12}}>{[m.first_name,m.last_name].filter(Boolean).join(" ") || "Profil incomplet"}</b>
+            <p style={{margin:"3px 0",fontSize:9,color:MUTED}}>{m.city || "Ville non renseignée"} · {m.territory || "Territoire non renseigné"}</p>
+            <span style={{fontSize:9,color:m.membership_status==="approved"?"#75cf91":GOLD}}>{m.membership_status || "pending"} · {m.membership_tier==="gc_vip"?"GC VIP":m.membership_tier==="gc_ambassador"?"GC AMBASSADRICE":"GC"}</span>
+          </div>
+        </div>
+        {m.membership_status==="pending" && m.profile_completed_at ? <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:6,marginTop:10}}>
+          <button onClick={()=>decideMember(m.id,"approved","gc")} style={{padding:"8px",borderRadius:9,border:`1px solid ${GOLD}`,background:"rgba(209,180,100,.12)",color:GOLD,fontSize:8}}>APPROUVER GC</button>
+          <button onClick={()=>decideMember(m.id,"approved","gc_vip")} style={{padding:"8px",borderRadius:9,border:`1px solid ${BORDER}`,background:"transparent",color:PEARL,fontSize:8}}>GC VIP</button>
+          <button onClick={()=>decideMember(m.id,"rejected")} style={{padding:"8px",borderRadius:9,border:"1px solid rgba(224,97,97,.35)",background:"transparent",color:"#e06161",fontSize:8}}>REFUSER</button>
+        </div> : null}
+      </div>)}
+    </div>
+    : screen==="adminSettings" ? ["Gestion des rôles","Niveaux membres","Catégories partenaires","Modèles d’annonces","Notifications","Sécurité","Journal d’activité"].map(x=><div key={x} style={{padding:"14px 0",borderBottom:"1px solid rgba(255,255,255,.08)",display:"flex",justifyContent:"space-between"}}><span>{x}</span><ChevronRight size={15} color={MUTED}/></div>)
+    : <div style={{padding:"18px 0",fontSize:11,color:MUTED}}>Ce module n’affiche plus de données fictives. Il sera relié aux données réelles du moteur Golden Circle.</div>}
   </div></div></Shell>;
 }
