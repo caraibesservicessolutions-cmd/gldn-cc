@@ -160,6 +160,39 @@ export default function HomePage() {
     setAuthBusy(false);
   }
 
+  async function completeExistingProfile(){
+    if(!currentUserId) return;
+    if(!firstName.trim() || !lastName.trim() || !phone.trim() || !city.trim() || !territory.trim()){
+      setAuthError("Complétez les informations obligatoires.");
+      return;
+    }
+    if(!confirm18 || !confirmAccuracy || !acceptRules || !acceptPrivacy){
+      setAuthError("Les confirmations obligatoires doivent être acceptées.");
+      return;
+    }
+    setAuthBusy(true); setAuthError("");
+    const {error}=await supabase.from("profiles").update({
+      first_name:firstName.trim(),
+      last_name:lastName.trim(),
+      phone:phone.trim(),
+      city:city.trim(),
+      territory:territory.trim(),
+      instagram:instagram.trim() || null,
+      profile_completed_at:new Date().toISOString(),
+      updated_at:new Date().toISOString()
+    }).eq("id",currentUserId);
+    if(error){ setAuthError(error.message); setAuthBusy(false); return; }
+    const rows=[
+      ["age_18",confirm18],["information_accuracy",confirmAccuracy],["gc_rules",acceptRules],["privacy_policy",acceptPrivacy]
+    ].filter(([,ok])=>ok).map(([consent_type])=>({
+      user_id:currentUserId,consent_type,status:true,policy_version:"v1.0",granted_at:new Date().toISOString(),source:"profile_completion"
+    }));
+    if(rows.length) await supabase.from("consents").upsert(rows,{onConflict:"user_id,consent_type,policy_version"});
+    setName([firstName,lastName].filter(Boolean).join(" "));
+    setProfileCompleted(true);
+    setAuthBusy(false);
+  }
+
   async function logout(){
     await supabase.auth.signOut();
     setLogged(false); setName(""); setEmail(""); setPassword(""); setRole("member"); setScreen("home"); setReserved(false); setConfirmed(false);
