@@ -37,7 +37,7 @@ function Shell({ children }: { children: React.ReactNode }) {
 }
 
 function GoldButton({children,onClick,disabled=false}:{children:React.ReactNode;onClick?:()=>void;disabled?:boolean}) {
-  return <button disabled={disabled} onClick={onClick} style={{width:"100%",border:0,borderRadius:12,padding:"13px 16px",background:disabled?"#5f5232":"linear-gradient(180deg,#e2c26b,#bd9340)",color:"#1a1014",fontWeight:800,fontSize:11,letterSpacing:.5,opacity:disabled?.65:1}}>{children}</button>
+  return <button disabled={disabled} onClick={onClick} style={{width:"100%",border:0,borderRadius:12,padding:"13px 16px",background:disabled?"#5f5232":"linear-gradient(180deg,#e2c26b,#bd9340)",color:"#1a1014",fontWeight:800,fontSize:11,letterSpacing:.5,opacity:disabled ? .65 : 1}}>{children}</button>
 }
 
 function TopBar({title,back,onBack,right}:{title:string;back?:boolean;onBack?:()=>void;right?:React.ReactNode}) {
@@ -139,7 +139,7 @@ export default function HomePage() {
         <section style={{padding:"0 14px"}}>
           <div style={{display:"flex",justifyContent:"space-between",marginBottom:12}}><h3 style={{margin:0,fontSize:14,fontWeight:500}}>ÉVÉNEMENTS À LA UNE</h3><button onClick={()=>setScreen("explorer")} style={{border:0,background:"transparent",color:GOLD,fontSize:10}}>Tout voir ›</button></div>
           <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10}}>
-            {events.slice(1).map(e=><button key={e.id} onClick={()=>{setSelected(e);setScreen("detail")}} style={{padding:0,textAlign:"left",border:`1px solid ${BORDER}`,borderRadius:16,background:CARD,color:PEARL,overflow:"hidden"}}><EventArt compact/><div style={{padding:10}}><b style={{fontSize:13}}>{e.title}</b><p style={{margin:"4px 0 0",fontSize:9,color:MUTED}}>{e.meta||e.date} · {e.venue}</p></div></button>)}
+            {events.slice(1).map(e=><button key={e.id} onClick={()=>{setSelected(e);setScreen("detail")}} style={{padding:0,textAlign:"left",border:`1px solid ${BORDER}`,borderRadius:16,background:CARD,color:PEARL,overflow:"hidden"}}><EventArt compact/><div style={{padding:10}}><b style={{fontSize:13}}>{e.title}</b><p style={{margin:"4px 0 0",fontSize:9,color:MUTED}}>{e.date} · {e.venue}</p></div></button>)}
           </div>
         </section>
 
