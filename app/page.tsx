@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { QRCodeSVG } from "qrcode.react";
+import { createClient } from "@supabase/supabase-js";
 import {
   Bell, CalendarDays, ChevronLeft, ChevronRight, Clock3, Compass, Crown,
   Diamond, Home, MapPin, QrCode, Search, Settings, ShieldCheck, TicketCheck,
@@ -13,6 +14,9 @@ const PEARL = "#FAFAF9";
 const MUTED = "#9d9297";
 const CARD = "#0e0a0c";
 const BORDER = "rgba(209,180,100,.20)";
+const SUPABASE_URL = "https://jnknwwfazfwqjlnhpzkm.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_VTVS6BQJ1cUREwkukTTQjg_HNuWIBv5";
+const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
 
 type Role = "member" | "partner" | "admin";
 type Screen =
@@ -70,33 +74,73 @@ export default function HomePage() {
   const [role,setRole] = useState<Role>("member");
   const [logged,setLogged] = useState(false);
   const [name,setName] = useState("");
+  const [email,setEmail] = useState("");
+  const [password,setPassword] = useState("");
+  const [authBusy,setAuthBusy] = useState(false);
+  const [authError,setAuthError] = useState("");
+  const [authInfo,setAuthInfo] = useState("");
   const [screen,setScreen] = useState<Screen>("home");
   const [selected,setSelected] = useState(events[0]);
   const [reserved,setReserved] = useState(false);
   const [confirmed,setConfirmed] = useState(false);
 
-  useEffect(()=>{
-    const saved = window.localStorage.getItem("gc-demo-session");
-    if(saved){
-      try{
-        const v=JSON.parse(saved);
-        if(v?.logged){ setLogged(true); setRole(v.role||"member"); setName(v.name||"Membre GC"); setScreen(v.role==="partner"?"partnerHome":v.role==="admin"?"adminHome":"home"); }
-      }catch{}
+  async function hydrateUser(userId:string,userEmail?:string|null){
+    const { data, error } = await supabase
+      .from("profiles")
+      .select("role,membership_tier,account_status,first_name,last_name")
+      .eq("id",userId)
+      .single();
+
+    if(error || !data){
+      setAuthError("Compte reconnu, mais le profil Golden Circle n’est pas encore disponible.");
+      return;
     }
+
+    const nextRole=(data.role || "member") as Role;
+    const profileName=[data.first_name,data.last_name].filter(Boolean).join(" ").trim();
+    setRole(nextRole);
+    setName(profileName || (userEmail ? userEmail.split("@")[0] : "Golden Circle"));
+    setLogged(true);
+    setScreen(nextRole==="partner" ? "partnerHome" : nextRole==="admin" ? "adminHome" : "home");
+  }
+
+  useEffect(()=>{
+    supabase.auth.getSession().then(({data})=>{
+      if(data.session?.user) hydrateUser(data.session.user.id,data.session.user.email);
+    });
+    const { data: listener } = supabase.auth.onAuthStateChange((_event,session)=>{
+      if(session?.user) hydrateUser(session.user.id,session.user.email);
+      else setLogged(false);
+    });
+    return ()=>listener.subscription.unsubscribe();
   },[]);
 
   const displayName = name.trim() || (role==="member"?"Membre GC":role==="partner"?"Partenaire GC":"Administration");
   const passCode = useMemo(()=>`GC-FUEGO-${(displayName.replace(/\s+/g,"").toUpperCase().slice(0,4)||"MEMB")}-8F4K2`,[displayName]);
 
-  function login(){
-    setLogged(true);
-    const start:Screen = role==="member"?"home":role==="partner"?"partnerHome":"adminHome";
-    setScreen(start);
-    window.localStorage.setItem("gc-demo-session",JSON.stringify({logged:true,role,name:displayName}));
+  async function login(){
+    setAuthBusy(true); setAuthError(""); setAuthInfo("");
+    const { data, error } = await supabase.auth.signInWithPassword({email:email.trim(),password});
+    if(error){ setAuthError(error.message); setAuthBusy(false); return; }
+    if(data.user) await hydrateUser(data.user.id,data.user.email);
+    setAuthBusy(false);
   }
-  function logout(){
-    window.localStorage.removeItem("gc-demo-session");
-    setLogged(false); setName(""); setRole("member"); setScreen("home"); setReserved(false); setConfirmed(false);
+
+  async function signup(){
+    setAuthBusy(true); setAuthError(""); setAuthInfo("");
+    const { data, error } = await supabase.auth.signUp({email:email.trim(),password});
+    if(error){ setAuthError(error.message); setAuthBusy(false); return; }
+    if(data.session?.user){
+      await hydrateUser(data.session.user.id,data.session.user.email);
+    }else{
+      setAuthInfo("Compte créé. Vérifiez votre boîte mail pour confirmer l’adresse, puis connectez-vous.");
+    }
+    setAuthBusy(false);
+  }
+
+  async function logout(){
+    await supabase.auth.signOut();
+    setLogged(false); setName(""); setEmail(""); setPassword(""); setRole("member"); setScreen("home"); setReserved(false); setConfirmed(false);
   }
 
   if(!logged) return <Shell>
@@ -107,14 +151,14 @@ export default function HomePage() {
         <p style={{margin:0,fontSize:11,letterSpacing:2,color:GOLD}}>CARAÏBES</p>
       </div>
       <div style={{border:`1px solid ${BORDER}`,borderRadius:22,padding:18,background:"rgba(10,7,8,.88)"}}>
-        <p style={{margin:"0 0 12px",fontSize:10,letterSpacing:1.8,color:GOLD}}>ACCÈS DE TEST</p>
-        <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:8,marginBottom:14}}>
-          {([["member","Membre"],["partner","Partenaire"],["admin","Admin"]] as [Role,string][]).map(([r,l])=><button key={r} onClick={()=>setRole(r)} style={{padding:"10px 6px",borderRadius:10,border:`1px solid ${role===r?GOLD:BORDER}`,background:role===r?"rgba(209,180,100,.12)":"#0d0a0b",color:role===r?GOLD:PEARL,fontSize:10}}>{l}</button>)}
-        </div>
-        <input value={name} onChange={e=>setName(e.target.value)} placeholder={role==="member"?"Votre prénom":role==="partner"?"Nom de l’organisation":"Nom administrateur"} style={{width:"100%",boxSizing:"border-box",padding:"13px 12px",borderRadius:10,border:"1px solid rgba(255,255,255,.13)",background:"#111012",color:PEARL,outline:"none",marginBottom:10}}/>
-        <input placeholder="Mot de passe (démo)" type="password" style={{width:"100%",boxSizing:"border-box",padding:"13px 12px",borderRadius:10,border:"1px solid rgba(255,255,255,.13)",background:"#111012",color:PEARL,outline:"none",marginBottom:14}}/>
-        <GoldButton onClick={login}>SE CONNECTER</GoldButton>
-        <p style={{fontSize:9,lineHeight:1.5,color:MUTED,textAlign:"center",margin:"12px 0 0"}}>Prototype interactif : aucune authentification réelle n’est encore utilisée.</p>
+        <p style={{margin:"0 0 12px",fontSize:10,letterSpacing:1.8,color:GOLD}}>ACCÈS SÉCURISÉ</p>
+        <input value={email} onChange={e=>setEmail(e.target.value)} autoComplete="email" inputMode="email" placeholder="Adresse e-mail" style={{width:"100%",boxSizing:"border-box",padding:"13px 12px",borderRadius:10,border:"1px solid rgba(255,255,255,.13)",background:"#111012",color:PEARL,outline:"none",marginBottom:10}}/>
+        <input value={password} onChange={e=>setPassword(e.target.value)} autoComplete="current-password" placeholder="Mot de passe" type="password" style={{width:"100%",boxSizing:"border-box",padding:"13px 12px",borderRadius:10,border:"1px solid rgba(255,255,255,.13)",background:"#111012",color:PEARL,outline:"none",marginBottom:14}}/>
+        <GoldButton disabled={authBusy || !email || !password} onClick={login}>{authBusy?"CONNEXION…":"SE CONNECTER"}</GoldButton>
+        <button disabled={authBusy || !email || password.length<8} onClick={signup} style={{width:"100%",marginTop:10,padding:"11px 14px",borderRadius:12,border:`1px solid ${BORDER}`,background:"transparent",color:GOLD,fontSize:10}}>PREMIÈRE ACTIVATION / CRÉER MON ACCÈS</button>
+        {authError ? <p style={{fontSize:10,lineHeight:1.5,color:"#e78686",margin:"12px 0 0"}}>{authError}</p> : null}
+        {authInfo ? <p style={{fontSize:10,lineHeight:1.5,color:"#87d8a0",margin:"12px 0 0"}}>{authInfo}</p> : null}
+        <p style={{fontSize:9,lineHeight:1.5,color:MUTED,textAlign:"center",margin:"12px 0 0"}}>Le rôle affiché après connexion vient de Supabase et ne peut pas être choisi depuis l’interface.</p>
       </div>
     </div>
   </Shell>;
