@@ -215,7 +215,7 @@ export default function HomePage() {
       <div style={{paddingBottom:88}}>
         <header style={{padding:"18px 18px 12px",display:"flex",alignItems:"center",gap:12}}>
           <div style={{width:46,height:46,borderRadius:"50%",border:`1px solid ${GOLD}`,display:"grid",placeItems:"center",background:"#130b0f",color:GOLD,fontSize:12}}>GC</div>
-          <div style={{flex:1}}><p style={{margin:0,fontSize:10,color:MUTED}}>Bonjour,</p><div style={{display:"flex",gap:8,alignItems:"center"}}><h1 style={{margin:0,fontSize:20,fontWeight:400}}>{displayName}</h1><span style={{fontSize:9,padding:"4px 7px",borderRadius:999,background:GOLD,color:"#1b1115",fontWeight:700}}>GC VIP ◇</span></div></div>
+          <div style={{flex:1}}><p style={{margin:0,fontSize:10,color:MUTED}}>Bonjour,</p><div style={{display:"flex",gap:8,alignItems:"center"}}><h1 style={{margin:0,fontSize:20,fontWeight:400}}>{displayName}</h1><span style={{fontSize:9,padding:"4px 7px",borderRadius:999,background:GOLD,color:"#1b1115",fontWeight:700}}>GC</span></div></div>
           <button onClick={()=>setScreen("notifications")} style={{border:0,background:"transparent",color:GOLD}}><Bell size={19}/></button>
         </header>
 
@@ -255,7 +255,7 @@ export default function HomePage() {
     if(screen==="reservation") return <Shell><div><TopBar title="Confirmation" back onBack={()=>setScreen("detail")}/><div style={{padding:16}}>
       <div style={{display:"grid",gridTemplateColumns:"72px 1fr",gap:12,padding:12,borderRadius:14,border:`1px solid ${BORDER}`,background:CARD}}><EventArt compact/><div><b>{selected.title}</b><p style={{margin:"5px 0",fontSize:10,color:MUTED}}>{selected.date} · {selected.venue}</p></div></div>
       <h3 style={{fontSize:15,margin:"20px 0 10px"}}>Votre réservation</h3>
-      <div style={{fontSize:12,lineHeight:1.9,color:"#d9d2d5"}}><div>Membre <span style={{float:"right",color:GOLD}}>{displayName}</span></div><div>Niveau <span style={{float:"right"}}>GC VIP</span></div><div>Privilège <span style={{float:"right"}}>{selected.benefit}</span></div><div>Places <span style={{float:"right"}}>1</span></div></div>
+      <div style={{fontSize:12,lineHeight:1.9,color:"#d9d2d5"}}><div>Membre <span style={{float:"right",color:GOLD}}>{displayName}</span></div><div>Niveau <span style={{float:"right"}}>{membershipTier==='gc_vip'?'GC VIP':membershipTier==='gc_ambassador'?'GC AMBASSADRICE':'GC'}</span></div><div>Privilège <span style={{float:"right"}}>{selected.benefit}</span></div><div>Places <span style={{float:"right"}}>1</span></div></div>
       <label style={{display:"flex",gap:8,alignItems:"flex-start",fontSize:10,color:MUTED,margin:"18px 0"}}><input type="checkbox" defaultChecked/> J’accepte les conditions de l’événement.</label>
       <GoldButton onClick={()=>{setConfirmed(true);setScreen("pass")}}>CONFIRMER</GoldButton>
     </div></div></Shell>;
@@ -272,7 +272,7 @@ export default function HomePage() {
     if(screen==="notifications") return <Shell><div style={{paddingBottom:88}}><TopBar title="Notifications"/><div style={{padding:16}}>{["Golden Hour activée : une nouvelle opportunité est disponible.","Votre réservation FUEGO est prête à être confirmée.","Nouvel événement partenaire ajouté dans Explorer."].map((x,i)=><div key={i} style={{padding:"14px 0",borderBottom:"1px solid rgba(255,255,255,.08)",fontSize:12}}><span style={{color:GOLD,marginRight:8}}>●</span>{x}</div>)}</div><Nav active="notifications" onNav={setScreen}/></div></Shell>;
 
     return <Shell><div style={{paddingBottom:88}}><TopBar title="Mon profil" right={<button onClick={logout} style={{border:0,background:"transparent",color:"#e06161"}}><LogOut size={18}/></button>}/><div style={{padding:16}}>
-      <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:18}}><div style={{width:60,height:60,borderRadius:"50%",border:`1px solid ${GOLD}`,display:"grid",placeItems:"center",color:GOLD}}>GC</div><div><h2 style={{margin:0,fontSize:18}}>{displayName}</h2><p style={{margin:"4px 0 0",fontSize:10,color:GOLD}}>GC VIP ◇</p></div></div>
+      <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:18}}><div style={{width:60,height:60,borderRadius:"50%",border:`1px solid ${GOLD}`,display:"grid",placeItems:"center",color:GOLD}}>GC</div><div><h2 style={{margin:0,fontSize:18}}>{displayName}</h2><p style={{margin:"4px 0 0",fontSize:10,color:GOLD}}>GC</p></div></div>
       {["Mes informations","Mon niveau GC","Mes préférences","Mes réservations","Mes avantages","Notifications","Centre d’aide"].map(x=><button key={x} style={{width:"100%",padding:"14px 0",border:0,borderBottom:"1px solid rgba(255,255,255,.08)",background:"transparent",color:PEARL,textAlign:"left",display:"flex",justifyContent:"space-between"}}><span>{x}</span><ChevronRight size={16} color={MUTED}/></button>)}
     </div><Nav active="profile" onNav={setScreen}/></div></Shell>;
   }
