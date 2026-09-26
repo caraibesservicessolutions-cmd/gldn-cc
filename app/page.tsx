@@ -80,6 +80,11 @@ export default function HomePage() {
   const [authBusy,setAuthBusy] = useState(false);
   const [authError,setAuthError] = useState("");
   const [authInfo,setAuthInfo] = useState("");
+  const [membershipTier,setMembershipTier] = useState<"gc"|"gc_vip"|"gc_ambassador"|null>("gc");
+  const [membershipStatus,setMembershipStatus] = useState<"pending"|"approved"|"rejected"|"suspended"|null>(null);
+  const [accountStatus,setAccountStatus] = useState("active");
+  const [profileCompleted,setProfileCompleted] = useState(false);
+  const [currentUserId,setCurrentUserId] = useState<string|null>(null);
   const [screen,setScreen] = useState<Screen>("home");
   const [selected,setSelected] = useState(events[0]);
   const [reserved,setReserved] = useState(false);
@@ -88,7 +93,7 @@ export default function HomePage() {
   async function hydrateUser(userId:string,userEmail?:string|null){
     const { data, error } = await supabase
       .from("profiles")
-      .select("role,membership_tier,account_status,first_name,last_name")
+      .select("role,membership_tier,membership_status,account_status,first_name,last_name,profile_completed_at")
       .eq("id",userId)
       .single();
 
@@ -99,8 +104,13 @@ export default function HomePage() {
 
     const nextRole=(data.role || "member") as Role;
     const profileName=[data.first_name,data.last_name].filter(Boolean).join(" ").trim();
+    setCurrentUserId(userId);
     setRole(nextRole);
-    setName(profileName || (userEmail ? userEmail.split("@")[0] : "Golden Circle"));
+    setMembershipTier((data.membership_tier || null) as "gc"|"gc_vip"|"gc_ambassador"|null);
+    setMembershipStatus((data.membership_status || null) as "pending"|"approved"|"rejected"|"suspended"|null);
+    setAccountStatus(data.account_status || "active");
+    setProfileCompleted(Boolean(data.profile_completed_at));
+    setName(profileName || (nextRole==="admin" ? "Administration" : "Membre GC"));
     setLogged(true);
     setScreen(nextRole==="partner" ? "partnerHome" : nextRole==="admin" ? "adminHome" : "home");
   }
