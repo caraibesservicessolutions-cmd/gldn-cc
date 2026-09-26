@@ -72,6 +72,7 @@ function EventArt({compact=false}:{compact?:boolean}) {
 
 export default function HomePage() {
   const [role,setRole] = useState<Role>("member");
+  const [entryMode,setEntryMode] = useState<Role>("member");
   const [logged,setLogged] = useState(false);
   const [name,setName] = useState("");
   const [email,setEmail] = useState("");
@@ -144,21 +145,57 @@ export default function HomePage() {
   }
 
   if(!logged) return <Shell>
-    <div style={{minHeight:"100vh",padding:"44px 22px 28px",display:"flex",flexDirection:"column",justifyContent:"center"}}>
-      <div style={{textAlign:"center",marginBottom:28}}>
-        <img src="/brand/golden-circle-emblem-transparent.png" alt="Golden Circle" style={{width:148,maxWidth:"55%",height:"auto"}}/>
-        <h1 style={{margin:"8px 0 2px",fontSize:24,fontWeight:500,letterSpacing:1}}>GOLDEN CIRCLE</h1>
-        <p style={{margin:0,fontSize:11,letterSpacing:2,color:GOLD}}>CARAÏBES</p>
+    <div style={{minHeight:"100vh",padding:"34px 20px 28px",display:"flex",flexDirection:"column",justifyContent:"center"}}>
+      <div style={{textAlign:"center",marginBottom:24}}>
+        <img src="/brand/golden-circle-emblem-transparent.png" alt="Golden Circle" style={{width:142,maxWidth:"52%",height:"auto"}}/>
+        <h1 style={{margin:"7px 0 2px",fontSize:23,fontWeight:500,letterSpacing:1}}>GOLDEN CIRCLE</h1>
+        <p style={{margin:0,fontSize:10,letterSpacing:2,color:GOLD}}>CARAÏBES</p>
       </div>
-      <div style={{border:`1px solid ${BORDER}`,borderRadius:22,padding:18,background:"rgba(10,7,8,.88)"}}>
-        <p style={{margin:"0 0 12px",fontSize:10,letterSpacing:1.8,color:GOLD}}>ACCÈS SÉCURISÉ</p>
+
+      <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:7,marginBottom:10}}>
+        {([["member","Membre"],["partner","Partenaire"],["admin","Admin"]] as [Role,string][]).map(([mode,label])=>
+          <button key={mode} onClick={()=>{setEntryMode(mode);setAuthError("");setAuthInfo("");}} style={{padding:"10px 5px",borderRadius:11,border:`1px solid ${entryMode===mode?GOLD:BORDER}`,background:entryMode===mode?"rgba(209,180,100,.12)":"rgba(10,7,8,.78)",color:entryMode===mode?GOLD:PEARL,fontSize:9,letterSpacing:.3}}>
+            {label}
+          </button>
+        )}
+      </div>
+
+      <div style={{border:`1px solid ${BORDER}`,borderRadius:22,padding:18,background:"rgba(10,7,8,.90)"}}>
+        <p style={{margin:"0 0 5px",fontSize:10,letterSpacing:1.7,color:GOLD}}>
+          {entryMode==="member"?"ESPACE MEMBRE":entryMode==="partner"?"ESPACE PARTENAIRE":"ADMINISTRATION"}
+        </p>
+        <p style={{margin:"0 0 14px",fontSize:9,lineHeight:1.5,color:MUTED}}>
+          {entryMode==="member"
+            ?"Connectez-vous à votre espace GC ou créez votre compte membre."
+            :entryMode==="partner"
+              ?"Connexion réservée aux partenaires validés par Golden Circle."
+              :"Accès réservé à l’administration Golden Circle."}
+        </p>
+
         <input value={email} onChange={e=>setEmail(e.target.value)} autoComplete="email" inputMode="email" placeholder="Adresse e-mail" style={{width:"100%",boxSizing:"border-box",padding:"13px 12px",borderRadius:10,border:"1px solid rgba(255,255,255,.13)",background:"#111012",color:PEARL,outline:"none",marginBottom:10}}/>
         <input value={password} onChange={e=>setPassword(e.target.value)} autoComplete="current-password" placeholder="Mot de passe" type="password" style={{width:"100%",boxSizing:"border-box",padding:"13px 12px",borderRadius:10,border:"1px solid rgba(255,255,255,.13)",background:"#111012",color:PEARL,outline:"none",marginBottom:14}}/>
         <GoldButton disabled={authBusy || !email || !password} onClick={login}>{authBusy?"CONNEXION…":"SE CONNECTER"}</GoldButton>
-        <button disabled={authBusy || !email || password.length<8} onClick={signup} style={{width:"100%",marginTop:10,padding:"11px 14px",borderRadius:12,border:`1px solid ${BORDER}`,background:"transparent",color:GOLD,fontSize:10}}>PREMIÈRE ACTIVATION / CRÉER MON ACCÈS</button>
+
+        {entryMode==="member" ? (
+          <button disabled={authBusy || !email || password.length<8} onClick={signup} style={{width:"100%",marginTop:10,padding:"11px 14px",borderRadius:12,border:`1px solid ${BORDER}`,background:"transparent",color:GOLD,fontSize:10}}>
+            CRÉER MON COMPTE MEMBRE
+          </button>
+        ) : null}
+
+        {entryMode==="partner" ? (
+          <p style={{fontSize:9,lineHeight:1.5,color:MUTED,textAlign:"center",margin:"12px 0 0"}}>
+            Les comptes partenaires sont activés après validation Golden Circle.
+          </p>
+        ) : null}
+
+        {entryMode==="admin" ? (
+          <p style={{fontSize:9,lineHeight:1.5,color:MUTED,textAlign:"center",margin:"12px 0 0"}}>
+            Aucun compte Admin ne peut être créé depuis cette page.
+          </p>
+        ) : null}
+
         {authError ? <p style={{fontSize:10,lineHeight:1.5,color:"#e78686",margin:"12px 0 0"}}>{authError}</p> : null}
         {authInfo ? <p style={{fontSize:10,lineHeight:1.5,color:"#87d8a0",margin:"12px 0 0"}}>{authInfo}</p> : null}
-        <p style={{fontSize:9,lineHeight:1.5,color:MUTED,textAlign:"center",margin:"12px 0 0"}}>Le rôle affiché après connexion vient de Supabase et ne peut pas être choisi depuis l’interface.</p>
       </div>
     </div>
   </Shell>;
